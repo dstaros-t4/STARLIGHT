@@ -28,10 +28,9 @@ of the hopping terms.
 - Automated generation of tight-binding (TB) models for magnetized, Gutzwiller 
   renormalized 2D square lattices,
 - Calculation of band structures,
-- Calculation of the Kubo transverse and longitudinal conductivity.
 - Self-consistent optimization of Gutzwiller renormalization parameters.
-- Calculation of the Kubo transverse and longitudinal conductivity for real-
-  space TB models (with or without correlation/Gutzwiller renormalization).
+- Real-space calculation of the Kubo transverse and longitudinal conductivity
+  with or without effective correlation/Gutzwiller renormalization.
 
 
 #  NOTES
