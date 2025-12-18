@@ -67,7 +67,7 @@ def expectation_plaq_ham(vars, Nx, Ny, ta, tb, p, q, U, occupations=False, e_lis
     eigvals = []
     for kx in kx_points:
         for ky in ky_points:
-            ham_ks, ham_ksb = ham_plaq(ta, tb, kx, ky0=ky, p=p, q=q, occupations=occupations, d_params=vars, e_list=e_list)
+            ham_ks, ham_ksb = ham_plaq(ta, tb, kx, ky=ky, p=p, q=q, occupations=occupations, d_params=vars, e_list=e_list)
             eigvals_ks, eigvecs_ks   = np.linalg.eigh(ham_ks)
             eigvals_ksb, eigvecs_ksb = np.linalg.eigh(ham_ksb)
             eigvals += list(eigvals_ks)+list(eigvals_ksb)
