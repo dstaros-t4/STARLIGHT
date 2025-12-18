@@ -167,62 +167,13 @@ def real_ham(Nx, Ny, ta, tb, e_list=False, q=False, gauge=False, occupations=Fal
 
     return full_ham
 
-def ham_plaq_old(ta, tb, kx, ky0, p, q, occupations=False, d_params=False, e_list=False):
+def ham_plaq(ta, tb, kx, ky, p, q, occupations=False, d_params=False, e_list=False):
     """ Function which generates a *numerical* plaquette Hamiltonian in k-space
         PARAMETERS
                 ta: Quantifies hopping energy in x
                 tb: Quantifies hopping energy in y
                 kx: x-component of k-point at which to construct the Hamiltonian
-               ky0: y-component of k-point at which to center the Hamiltonian
-                 p: An integer defining magnetic flux (must be relatively prime with q)
-                 q: An integer defining magnetic flux (must be relatively prime with p)
-       occupations: List of site occupations defining Gutzwiller parameters (length = q)
-          d_params: Array of double occupancy parameters defining Gutzwiller parameters (length = q)
-            e_list: List of site energies
-    """
-    # Construct generic Hamiltonian template (of size q by q)
-    ham = np.zeros((q, q), dtype=complex)
-    for i in range(0,q):
-        phi = p/q
-        A = 2*np.pi*phi*(i)
-        vi = -2*tb*np.cos(ky0 - A)
-        ham[i][i] += vi
-        #ham[i][i] += e_list[i]
-        if i in range(0,q-1):
-            ham[i+1][i] = -ta
-            ham[i][i+1] = -ta
-    # Periodic boundary hops
-    ham[0][q-1] = -ta*np.exp( 1j*q*kx)
-    ham[q-1][0] = -ta*np.exp(-1j*q*kx)
-
-    ham_s  = ham.copy()
-    ham_sb = ham.copy()
-
-    # Add onsite energies if provided (must be of length 2q)
-    if e_list:
-        ham_s  += np.diag(e_list[:q])
-        ham_sb += np.diag(e_list[q:])
-
-    if occupations and d_params.any():
-        for i in range(0,q):
-            for j in range(0,q):
-                # Calculate Gutzwiller renormalization parameters for s and sbar channels
-                sqa_i_s  = sq_a(occupations[i], occupations[i+q], d_params[i])
-                sqa_i_sb = sq_a(occupations[i+q], occupations[i], d_params[i])
-                sqa_j_s  = sq_a(occupations[j], occupations[j+q], d_params[j])
-                sqa_j_sb = sq_a(occupations[j+q], occupations[j], d_params[j])
-                ham_s[i][j]  *= sqa_i_s*sqa_j_s
-                ham_sb[i][j] *= sqa_i_sb*sqa_j_sb
-    
-    return ham_s, ham_sb
-
-def ham_plaq(ta, tb, kx, ky0, p, q, occupations=False, d_params=False, e_list=False):
-    """ Function which generates a *numerical* plaquette Hamiltonian in k-space
-        PARAMETERS
-                ta: Quantifies hopping energy in x
-                tb: Quantifies hopping energy in y
-                kx: x-component of k-point at which to construct the Hamiltonian
-               ky0: y-component of k-point at which to center the Hamiltonian
+                ky: y-component of k-point at which to construct the Hamiltonian
                  p: An integer defining magnetic flux (must be relatively prime with q)
                  q: An integer defining magnetic flux (must be relatively prime with p)
        occupations: List of site occupations defining Gutzwiller parameters (length = q)
@@ -241,8 +192,8 @@ def ham_plaq(ta, tb, kx, ky0, p, q, occupations=False, d_params=False, e_list=Fa
             ham[j+1][j] = -tb
             ham[j][j+1] = -tb
     # Periodic boundary hops
-    ham[0][q-1] = -tb*np.exp( 1j*q*ky0)
-    ham[q-1][0] = -tb*np.exp(-1j*q*ky0)
+    ham[0][q-1] = -tb*np.exp( 1j*q*ky)
+    ham[q-1][0] = -tb*np.exp(-1j*q*ky)
 
     ham_s  = ham.copy()
     ham_sb = ham.copy()
@@ -264,7 +215,6 @@ def ham_plaq(ta, tb, kx, ky0, p, q, occupations=False, d_params=False, e_list=Fa
                 ham_sb[i][j] *= sqa_i_sb*sqa_j_sb
 
     return ham_s, ham_sb
-
 
 def expectation_muVT(eigvals, mu, T=False):
     """ Function which calculates the grand canonical expectation value of a numerical TB Hamiltonian.
