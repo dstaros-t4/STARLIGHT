@@ -181,7 +181,7 @@ def calc_bands_kx(ta, tb, kx_min, kx_max, kx_int, ky, p, q, occupations=False, d
     counter = 0
     for kx in kx_values:
         counter += 1
-        ham_kx_s, ham_kx_sb = ham_plaq(ta=ta, tb=tb, kx=kx, ky0=ky, p=p, q=q, occupations=occupations, d_params=d_params, e_list=e_list)
+        ham_kx_s, ham_kx_sb = ham_plaq(ta=ta, tb=tb, kx=kx, ky=ky, p=p, q=q, occupations=occupations, d_params=d_params, e_list=e_list)
         eigvals_kx_s, eigvecs_kx_s = np.linalg.eigh(ham_kx_s)
         eigvals_kx_sb, eigvecs_kx_sb = np.linalg.eigh(ham_kx_sb)
         eigvals_list.append(list(eigvals_kx_s)+list(eigvals_kx_sb))
@@ -209,7 +209,7 @@ def calc_bands_ky(ta, tb, kx, ky_min, ky_max, ky_int, p, q, occupations=False, d
     counter = 0
     for ky in ky_values:
         counter += 1
-        ham_ky_s, ham_ky_sb = ham_plaq(ta=ta, tb=tb, kx=kx, ky0=ky, p=p, q=q, occupations=occupations, d_params=d_params, e_list=e_list)
+        ham_ky_s, ham_ky_sb = ham_plaq(ta=ta, tb=tb, kx=kx, ky=ky, p=p, q=q, occupations=occupations, d_params=d_params, e_list=e_list)
         eigvals_ky_s, eigvecs_ky_s = np.linalg.eigh(ham_ky_s)
         eigvals_ky_sb, eigvecs_ky_sb = np.linalg.eigh(ham_ky_sb)
         eigvals_list.append(list(eigvals_ky_s)+list(eigvals_ky_sb))
