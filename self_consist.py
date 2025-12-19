@@ -61,7 +61,7 @@ def expectation_plaq_ham(vars, Nx, Ny, ta, tb, p, q, U, occupations=False, e_lis
     '''
     # Define k-grid corresponding to real-space lattice
     kx_points = np.arange(-Nx/2, Nx/2, 1)*(np.pi/(Nx/2))
-    ky_points = np.arange(-Ny/(2*q), Ny/(2*q), 1)*(np.pi/(Ny/(2*q)))
+    ky_points = np.arange(-Ny/(2*q), Ny/(2*q), 1)*(np.pi/(Ny/2))
 
     # Evaluate eigenvalues of Hamiltonian
     eigvals = []
